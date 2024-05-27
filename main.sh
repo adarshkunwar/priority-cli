@@ -1,22 +1,8 @@
 #!/usr/bin/env bash 
 
-remove_project(){
-  echo "Removing a project"
-  echo "--------------------------------"
-
-  echo "--------------------------------"
-}
 
 
-close_priority(){
-  echo "Closing priority"
-  echo "--------------------------------"
-  exit 0
-  echo "--------------------------------"
-}
-
-main(){
-  clear
+clear
 cat <<EOF
              _            _ _         
             (_)          (_) |        
@@ -30,31 +16,30 @@ cat <<EOF
 
 EOF
 
-  echo "What do you want to do?"
-  echo "c. check the list of projects"
-  echo "r. Remove a project"
-  echo "a. add a project"
-  echo "p. close priority"
+echo "What do you want to do?"
+echo "c. check the list of projects"
+echo "r. Remove a project"
+echo "a. add a project"
+echo "p. close priority"
+read -p "Enter your choice: " choice
 
-  read -p "Enter your choice: " choice
+case $choice in
+  c)
+    source check.sh
+    ;;
+  r)
+    remove_project
+    ;;
+  a)
+    source add.sh
+    ;;
+  p)
+    echo "Closing priority"
+    echo "--------------------------------"
+    exit 0
+    ;;
+  *)
+    echo "Invalid choice"
+    ;;
+esac
 
-  case $choice in
-    c)
-      source check.sh
-      ;;
-    r)
-      remove_project
-      ;;
-    a)
-      source add.sh
-      ;;
-    p)
-      close_priority
-      ;;
-    *)
-      echo "Invalid choice"
-      ;;
-  esac
-}
-
-main
