@@ -3,8 +3,24 @@
 check_projects(){
   echo "Checking the list of projects"
   echo "--------------------------------"
-  rm -f tasks.json
-  ls -lah
+  
+  if [ ! -f tasks.json ]; then
+    echo "No projects found"
+    echo "--------------------------------"
+    exit 0
+  fi
+
+  lentgh=$(jq '. | length' tasks.json)
+
+  for i in $(seq 0 $((lentgh - 1))); do
+    name=$(jq -r ".[$i].name" tasks.json)
+    description=$(jq -r ".[$i].description" tasks.json)
+    echo "$((i+1)): $name"
+  done
+
+  echo "-------"
+
+
 
   echo "--------------------------------"
 }
