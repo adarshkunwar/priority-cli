@@ -14,8 +14,8 @@ remove_project(){
   echo "--------------------------------"
 }
 
-update_project(){
-  echo "Updating a project"
+add_project(){
+  echo "Add a project"
   echo "--------------------------------"
 
   echo "--------------------------------"
@@ -30,7 +30,7 @@ close_priority(){
 
 main(){
   clear
-  cat <<EOF
+cat <<EOF
              _            _ _         
             (_)          (_) |        
   _ __  _ __ _  ___  _ __ _| |_ _   _ 
@@ -41,11 +41,12 @@ main(){
   |_|                            |___/ 
 
 
-  EOF
+EOF
+
   echo "What do you want to do?"
   echo "c. check the list of projects"
   echo "r. Remove a project"
-  echo "a. update a project"
+  echo "a. add a project"
   echo "p. close priority"
 
   read -p "Enter your choice: " choice
@@ -58,7 +59,7 @@ main(){
       remove_project
       ;;
     a)
-      update_project
+      add_project
       ;;
     p)
       close_priority
