@@ -1,60 +1,5 @@
 #!/usr/bin/env bash 
 
-check_projects(){
-  echo "Checking the list of projects"
-  echo "--------------------------------"
-  
-  if [ ! -f tasks.json ]; then
-    echo "No projects found"
-    echo "--------------------------------"
-    exit 0
-  fi
-
-  lentgh=$(jq '. | length' tasks.json)
-
-  for i in $(seq 0 $((lentgh - 1))); do
-    name=$(jq -r ".[$i].name" tasks.json)
-    echo "$((i+1)): $name"
-  done
-
-  echo "-------"
-
-  echo "Select the operation you want to perform"
-  echo "c. Check a project in detail"
-  echo "u. Update the status of a project"
-  echo "e. Exit Priotity"
-
-  echo "-------"
-  read -p "Enter your choice: " choice
-
-  case $choice in
-    c) 
-      echo "enter the number of the project you want to check"
-      read chosenNumber;
-      
-      projectNumber=$((chosenNumber-1)) 
-      name=$(jq -r ".[$projectNumber].name" tasks.json)
-      description=$(jq -r ".[$projectNumber].description" tasks.json)
-  
-      echo "Project name: $name"
-      echo "Project description: $description"
-
-      ;;
-    u)
-      
-      echo "update"
-      ;;
-    e)
-      echo "exiting"
-      exit 0
-      ;;
-    *)
-      echo "Invalid choice"
-      ;;
-  esac
-  echo "--------------------------------"
-}
-
 remove_project(){
   echo "Removing a project"
   echo "--------------------------------"
@@ -62,40 +7,6 @@ remove_project(){
   echo "--------------------------------"
 }
 
-add_project(){
-  echo "Add a project"
-  echo "--------------------------------"
-
-  length=$(jq '. | length' tasks.json)
-  if [ $length -gt 3 ]; then
-    echo "You already have max number of project (4)"
-    echo "--------------------------------"
-    exit 0
-  fi
-  
-  read -p "Enter the name of the project: " name
-  read -p "Enter the description of the project: " description
-  
-  if [ ! -f tasks.json ]; then
-    touch tasks.json
-  fi
-
-  old_data=$(cat tasks.json)
-  
-  task_data=$(jq -n \
-  --arg name "$name" \
-  --arg description "$description" \
-  '{name: $name, description: $description}')
-
-  if [ -z "$old_data" ]; then
-    echo "[$task_data]" > tasks.json
-  else
-    echo "$old_data" | jq ". + [$task_data]" > tasks.json
-  fi
-
-  echo "Project added successfully"
-  echo "--------------------------------"
-}
 
 close_priority(){
   echo "Closing priority"
@@ -129,13 +40,13 @@ EOF
 
   case $choice in
     c)
-      check_projects
+      source check.sh
       ;;
     r)
       remove_project
       ;;
     a)
-      add_project
+      source add.sh
       ;;
     p)
       close_priority
