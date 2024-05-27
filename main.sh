@@ -17,7 +17,20 @@ remove_project(){
 add_project(){
   echo "Add a project"
   echo "--------------------------------"
+  
+  read -p "Enter the name of the project: " name
+  read -p "Enter the description of the project: " description
+  
 
+  
+  task_data=$(jq -n \
+  --arg name "$name" \
+  --arg description "$description" \
+  '{name: $name, description: $description}')
+
+  echo $task_data >> tasks.json
+
+  echo "Project added successfully"
   echo "--------------------------------"
 }
 
