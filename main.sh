@@ -20,6 +20,12 @@ add_project(){
   echo "Add a project"
   echo "--------------------------------"
 
+  length=$(jq '. | length' tasks.json)
+  if [ $length -gt 3 ]; then
+    echo "You already have max number of project (4)"
+    echo "--------------------------------"
+    exit 0
+  fi
   
   read -p "Enter the name of the project: " name
   read -p "Enter the description of the project: " description
