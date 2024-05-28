@@ -23,13 +23,13 @@ read -p "Enter your choice: " choice
 
 case $choice in
   c)
-    source check.sh
+    source ~/codes/bash/priority/check.sh
     ;;
   r)
-    source remove.sh
+    source ~/codes/bash/priority/remove.sh
     ;;
   a)
-    source add.sh
+    source ~/codes/bash/priority/add.sh
     ;;
   p)
     echo "Closing priority"

@@ -10,10 +10,10 @@
     exit 0
   fi
 
-  length=$(jq '. | length' tasks.json)
+  length=$(jq '. | length' ~/codes/bash/priority/tasks.json)
 
   for i in $(seq 0 $((length - 1))); do
-    name=$(jq -r ".[$i].name" tasks.json)
+    name=$(jq -r ".[$i].name" ~/codes/bash/priority/tasks.json)
     echo "$((i+1)): $name"
   done
 
@@ -34,9 +34,9 @@
       read chosenNumber;
       
       projectNumber=$((chosenNumber-1)) 
-      name=$(jq -r ".[$projectNumber].name" tasks.json)
-      description=$(jq -r ".[$projectNumber].description" tasks.json)
-      status=$(jq -r ".[$projectNumber].status" tasks.json)  
+      name=$(jq -r ".[$projectNumber].name" ~/codes/bash/priority/tasks.json)
+      description=$(jq -r ".[$projectNumber].description" ~/codes/bash/priority/tasks.json)
+      status=$(jq -r ".[$projectNumber].status" ~/codes/bash/priority/tasks.json)  
 
       echo "Project name: $name"
       echo "Project description: $description"
@@ -48,9 +48,9 @@
       read chosenNumber
 
       projectNumber=$((chosenNumber-1))
-      name=$(jq -r ".[$projectNumber].name" tasks.json)
-      description=$(jq -r ".[$projectNumber].description" tasks.json)
-      status=$(jq -r ".[$projectNumber].status" tasks.json)
+      name=$(jq -r ".[$projectNumber].name" ~/codes/bash/priority/tasks.json)
+      description=$(jq -r ".[$projectNumber].description" ~/codes/bash/priority/tasks.json)
+      status=$(jq -r ".[$projectNumber].status" ~/codes/bash/priority/tasks.json)
 
       echo "Project Name: $name"
       echo "Description: $description"
@@ -60,7 +60,7 @@
       # Update the status in the tasks.json file
       jq --argjson index "$projectNumber" --arg status "$current_status" '
         .[$index].status = $status
-      ' tasks.json > temp.json && mv temp.json tasks.json
+      ' ~/codes/bash/priority/tasks.json > ~/codes/bash/priority/temp.json && mv ~/codes/bash/priority/temp.json ~/codes/bash/priority/tasks.json
 
       echo "Status updated successfully!"
       ;;
