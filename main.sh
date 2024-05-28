@@ -26,7 +26,7 @@ case $choice in
     source check.sh
     ;;
   r)
-    remove_project
+    source remove.sh
     ;;
   a)
     source add.sh
