@@ -2,6 +2,10 @@
 
 echo "Add a project"
 echo "--------------------------------"
+if [ ! -f tasks.json ]; then
+  touch tasks.json
+fi
+old_data=$(cat tasks.json)
 length=$(jq '. | length' tasks.json)
 if [ $length -gt 3 ]; then
   echo "You already have max number of project (4)"
@@ -12,10 +16,6 @@ fi
 read -p "Enter the name of the project: " name
 read -p "Enter the description of the project: " description
 
-if [ ! -f tasks.json ]; then
-  touch tasks.json
-fi
-old_data=$(cat tasks.json)
 
 task_data=$(jq -n \
 --arg name "$name" \
