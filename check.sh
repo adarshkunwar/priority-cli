@@ -4,7 +4,7 @@
   echo "Checking the list of projects"
   echo "--------------------------------"
   
-  if [ ! -f tasks.json ]; then
+  if [ ! -f ~/codes/bash/priority/tasks.json ]; then
     echo "No projects found"
     echo "--------------------------------"
     exit 0
