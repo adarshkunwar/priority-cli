@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
-echo "Add a project"
-echo "--------------------------------"
-if [ ! -f tasks.json ]; then
-  touch ~/codes/bash/priority/tasks.json
-fi
-old_data=$(cat ~/codes/bash/priority/tasks.json)
-length=$(jq '. | length' ~/codes/bash/priority/tasks.json)
-if [ $length -gt 3 ]; then
+filedir="$HOME/alex/scripts/priority"
+old_data=$(cat "$filedir/tasks.json")
+length=$(jq '. | length' "$filedir/tasks.json" 2>/dev/null || echo 0)
+
+# Ensure length is an integer
+length=${length:-0}
+
+if [ "$length" -ge 4 ]; then
   echo "You already have max number of project (4)"
   echo "--------------------------------"
   exit 0
 fi
+
 
 read -p "Enter the name of the project: " name
 read -p "Enter the description of the project: " description
@@ -23,9 +24,9 @@ task_data=$(jq -n \
 '{name: $name, description: $description}')
 
 if [ -z "$old_data" ]; then
-  echo "[$task_data]" > ~/codes/bash/priority/tasks.json
+  echo "[$task_data]" > $filedir/tasks.json
 else
-  echo "$old_data" | jq ". + [$task_data]" > ~/codes/bash/priority/tasks.json
+  echo "$old_data" | jq ". + [$task_data]" > $filedir/tasks.json
 fi
 echo "Project added successfully"
   echo "--------------------------------"

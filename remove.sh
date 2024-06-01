@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+filedir="$HOME/alex/scripts/priority"
 echo "Removing a project"
 echo "--------------------------------"
 
-length=$(jq '. | length' ~/codes/bash/priority/tasks.json)
+length=$(jq '. | length' $filedir/tasks.json)
 
 for i in $(seq 0 $((length - 1))); do
-  name=$(jq -r ".[$i].name" ~/codes/bash/priority/tasks.json)
+  name=$(jq -r ".[$i].name" $filedir/tasks.json)
   echo "$((i+1)): $name"
 done
 
@@ -19,6 +20,6 @@ if [ $number -gt $length ]; then
   exit 1
 fi
 # Remove the selected project
-jq "del(.[$((number - 1))])" ~/codes/bash/priority/tasks.json > ~/codes/bash/priority/temp.json && mv ~/codes/bash/priority/temp.json ~/codes/bash/priority/tasks.json
+jq "del(.[$((number - 1))])" $filedir/tasks.json > $filedir/temp.json && mv $filedir/temp.json $filedir/tasks.json
 
 echo "--------------------------------"

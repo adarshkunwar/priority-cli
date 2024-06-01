@@ -1,6 +1,7 @@
 #!/usr/bin/env bash 
 
 clear
+filedir="$HOME/alex/scripts/priority"
 cat <<EOF
              _            _ _         
             (_)          (_) |        
@@ -23,13 +24,13 @@ read -p "Enter your choice: " choice
 
 case $choice in
   c)
-    source ~/codes/bash/priority/check.sh
+    source $filedir/check.sh 
     ;;
   r)
-    source ~/codes/bash/priority/remove.sh
+    source $filedir/remove.sh
     ;;
   a)
-    source ~/codes/bash/priority/add.sh
+    source $filedir/add.sh
     ;;
   p)
     echo "Closing priority"

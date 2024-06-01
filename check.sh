@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 
 
+filedir="$HOME/alex/scripts/priority"
   echo "Checking the list of projects"
   echo "--------------------------------"
-  
-  if [ ! -f ~/codes/bash/priority/tasks.json ]; then
-    echo "No projects found"
-    echo "--------------------------------"
-    exit 0
-  fi
 
-  length=$(jq '. | length' ~/codes/bash/priority/tasks.json)
+  length=$(jq '. | length' $filedir/tasks.json)
 
   for i in $(seq 0 $((length - 1))); do
-    name=$(jq -r ".[$i].name" ~/codes/bash/priority/tasks.json)
+    name=$(jq -r ".[$i].name" $filedir/tasks.json)
     echo "$((i+1)): $name"
   done
 
@@ -34,9 +29,9 @@
       read chosenNumber;
       
       projectNumber=$((chosenNumber-1)) 
-      name=$(jq -r ".[$projectNumber].name" ~/codes/bash/priority/tasks.json)
-      description=$(jq -r ".[$projectNumber].description" ~/codes/bash/priority/tasks.json)
-      status=$(jq -r ".[$projectNumber].status" ~/codes/bash/priority/tasks.json)  
+      name=$(jq -r ".[$projectNumber].name" $filedir/tasks.json)
+      description=$(jq -r ".[$projectNumber].description" $filedir/tasks.json)
+      status=$(jq -r ".[$projectNumber].status" $filedir/tasks.json)  
 
       echo "Project name: $name"
       echo "Project description: $description"
@@ -48,9 +43,9 @@
       read chosenNumber
 
       projectNumber=$((chosenNumber-1))
-      name=$(jq -r ".[$projectNumber].name" ~/codes/bash/priority/tasks.json)
-      description=$(jq -r ".[$projectNumber].description" ~/codes/bash/priority/tasks.json)
-      status=$(jq -r ".[$projectNumber].status" ~/codes/bash/priority/tasks.json)
+      name=$(jq -r ".[$projectNumber].name" $filedir/tasks.json)
+      description=$(jq -r ".[$projectNumber].description" $filedir/tasks.json)
+      status=$(jq -r ".[$projectNumber].status" $filedir/tasks.json)
 
       echo "Project Name: $name"
       echo "Description: $description"
@@ -60,7 +55,7 @@
       # Update the status in the tasks.json file
       jq --argjson index "$projectNumber" --arg status "$current_status" '
         .[$index].status = $status
-      ' ~/codes/bash/priority/tasks.json > ~/codes/bash/priority/temp.json && mv ~/codes/bash/priority/temp.json ~/codes/bash/priority/tasks.json
+      ' $filedir/tasks.json > $filedir/temp.json && mv $filedir/temp.json $filedir/tasks.json
 
       echo "Status updated successfully!"
       ;;
