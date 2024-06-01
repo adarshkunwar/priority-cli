@@ -63,7 +63,7 @@ r)
   read chosenNumber
 
   projectNumber=$((chosenNumber - 1))
-  jq "del(.[$projectNumber])" >>$fileDir/temp.json && mv $fileDir/temp.json $fileDir/tasks.json
+  jq "del(.[$projectNumber])" $filedir/tasks.json >$filedir/temp.json && mv $filedir/temp.json $filedir/tasks.json
 
   echo "Task removed successfully"
   ;;
