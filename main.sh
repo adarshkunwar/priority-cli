@@ -1,11 +1,11 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 clear
 filedir="$HOME/alex/scripts/priority"
 cat <<EOF
              _            _ _         
             (_)          (_) |        
-  _ __  _ __ _  ___  _ __ _| |_ _   _ 
+   _ __  _ __ _  ___  _ __ _| |_ _   _ 
   | '_ \| '__| |/ _ \| '__| | __| | | |
   | |_) | |  | | (_) | |  | | |_| |_| |
   | .__/|_|  |_|\___/|_|  |_|\__|\__, |
@@ -23,22 +23,21 @@ echo "p. close priority"
 read -p "Enter your choice: " choice
 
 case $choice in
-  c)
-    source $filedir/check.sh 
-    ;;
-  r)
-    source $filedir/remove.sh
-    ;;
-  a)
-    source $filedir/add.sh
-    ;;
-  p)
-    echo "Closing priority"
-    echo "--------------------------------"
-    exit 0
-    ;;
-  *)
-    echo "Invalid choice"
-    ;;
+c)
+  source $filedir/check.sh
+  ;;
+r)
+  source $filedir/remove.sh
+  ;;
+a)
+  source $filedir/add.sh
+  ;;
+p)
+  echo "Closing priority"
+  echo "--------------------------------"
+  exit 0
+  ;;
+*)
+  echo "Invalid choice"
+  ;;
 esac
-
