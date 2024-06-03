@@ -25,6 +25,17 @@ echo "C R E A T I N G   T A S K S . J S O N"
 touch $filedir/tasks.json
 
 echo "C R E A T I N G   A L I A S"
+if [ -f ~/.zshrc ]; then
+  if ! grep -q "alias priority=$filedir/main.sh" ~/.zshrc; then
+    echo "alias priority=$filedir/main.sh" >>~/.zshrc
+  fi
+elif [ -f ~/.bashrc ]; then
+  if ! grep -q "alias priority=$filedir/main.sh" ~/.bashrc; then
+    echo "alias priority=$filedir/main.sh" >>~/.bashrc
+  fi
+else
+  echo "shell not detected"
+fi
 echo "alias priority=$filedir/main.sh" >>~/.zshrc
 echo "alias priority=$filedir/main.sh" >>~/.bashrc
 
