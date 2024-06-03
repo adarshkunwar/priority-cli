@@ -3,8 +3,8 @@
 clear
 filedir="$HOME/alex/scripts/priority"
 cat <<EOF
-             _            _ _         
-            (_)          (_) |        
+             _            _  _         
+            (_)          (_)| |        
    _ __  _ __ _  ___  _ __ _| |_ _   _ 
   | '_ \| '__| |/ _ \| '__| | __| | | |
   | |_) | |  | | (_) | |  | | |_| |_| |
@@ -15,29 +15,43 @@ cat <<EOF
 
 EOF
 
+# run the existing projects
+
+filedir="$HOME/alex/scripts/priority"
+echo "Checking the list of projects"
+
+echo "--------------------------------"
+
+length=$(jq '. | length' $filedir/tasks.json)
+
+for i in $(seq 0 $((length - 1))); do
+  name=$(jq -r ".[$i].name" $filedir/tasks.json)
+  echo "$((i + 1)): $name"
+done
+
+echo "--------------------------------"
+
 echo "What do you want to do?"
-echo "c. check the list of projects"
-echo "r. Remove a project"
-echo "a. add a project"
-echo "p. close priority"
+echo "a. Add a project"
+echo "c. Check a project"
+echo "e. Exit priority"
+
 read -p "Enter your choice: " choice
 
 case $choice in
-c)
-  source $filedir/check.sh
-  ;;
-r)
-  source $filedir/remove.sh
-  ;;
 a)
   source $filedir/add.sh
   ;;
-p)
+c)
+  source $filedir/check.sh
+  ;;
+e)
   echo "Closing priority"
   echo "--------------------------------"
   exit 0
   ;;
 *)
   echo "Invalid choice"
+  exit 0
   ;;
 esac

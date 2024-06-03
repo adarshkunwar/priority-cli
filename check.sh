@@ -1,18 +1,8 @@
 #!/usr/bin/env bash
 
 filedir="$HOME/alex/scripts/priority"
-echo "Checking the list of projects"
-echo "--------------------------------"
-
-length=$(jq '. | length' $filedir/tasks.json)
-
-for i in $(seq 0 $((length - 1))); do
-  name=$(jq -r ".[$i].name" $filedir/tasks.json)
-  echo "$((i + 1)): $name"
-done
 
 echo "-------"
-
 echo "Select the operation you want to perform"
 echo "c. Check a project in detail"
 echo "u. Update the status of a project"
