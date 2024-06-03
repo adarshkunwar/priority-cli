@@ -3,9 +3,21 @@
 filedir="$HOME/alex/scripts/priority"
 
 echo "-------"
+read -p "Chose a project number: " chosenNumber
+
+echo "-------"
+projectNumber=$((chosenNumber - 1))
+name=$(jq -r ".[$projectNumber].name" $filedir/tasks.json)
+description=$(jq -r ".[$projectNumber].description" $filedir/tasks.json)
+status=$(jq -r ".[$projectNumber].status" $filedir/tasks.json)
+
+echo "Project name: $name"
+echo "Project description: $description"
+echo "Project status: $status"
+
+echo "-------"
 echo "Select the operation you want to perform"
-echo "c. Check a project in detail"
-echo "u. Update the status of a project"
+echo "u. Update the status"
 echo "r. Remove the project"
 echo "e. Exit Priority"
 
@@ -13,31 +25,7 @@ echo "-------"
 read -p "Enter your choice: " choice
 
 case $choice in
-c)
-  echo "enter the number of the project you want to check"
-  read chosenNumber
-
-  projectNumber=$((chosenNumber - 1))
-  name=$(jq -r ".[$projectNumber].name" $filedir/tasks.json)
-  description=$(jq -r ".[$projectNumber].description" $filedir/tasks.json)
-  status=$(jq -r ".[$projectNumber].status" $filedir/tasks.json)
-
-  echo "Project name: $name"
-  echo "Project description: $description"
-  echo "Project status: $status"
-  ;;
 u)
-  echo "Enter the number of the project you want to check"
-  read chosenNumber
-
-  projectNumber=$((chosenNumber - 1))
-  name=$(jq -r ".[$projectNumber].name" $filedir/tasks.json)
-  description=$(jq -r ".[$projectNumber].description" $filedir/tasks.json)
-  status=$(jq -r ".[$projectNumber].status" $filedir/tasks.json)
-
-  echo "Project Name: $name"
-  echo "Description: $description"
-  echo "Current Status: $status"
   read -p "What is the current status? " current_status
 
   # Update the status in the tasks.json file
@@ -45,25 +33,24 @@ u)
         .[$index].status = $status
       ' $filedir/tasks.json >$filedir/temp.json && mv $filedir/temp.json $filedir/tasks.json
 
-  echo "Status updated successfully!"
+  echo "Task status updated successfully!"
   ;;
 
 r)
-  echo "Enter the project you want to remove"
-  read chosenNumber
-
-  projectNumber=$((chosenNumber - 1))
   jq "del(.[$projectNumber])" $filedir/tasks.json >$filedir/temp.json && mv $filedir/temp.json $filedir/tasks.json
 
   echo "Task removed successfully"
   ;;
 
 e)
+  echo "-------"
   echo "exiting"
   exit 0
   ;;
 *)
+  echo "-------"
   echo "Invalid choice"
+  exit 0
   ;;
 esac
 echo "--------------------------------"

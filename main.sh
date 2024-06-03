@@ -36,6 +36,7 @@ echo "a. Add a project"
 echo "c. Check a project"
 echo "e. Exit priority"
 
+echo "-------"
 read -p "Enter your choice: " choice
 
 case $choice in
@@ -47,11 +48,12 @@ c)
   ;;
 e)
   echo "Closing priority"
-  echo "--------------------------------"
+  echo "-------"
   exit 0
   ;;
 *)
   echo "Invalid choice"
+  echo "-------"
   exit 0
   ;;
 esac
